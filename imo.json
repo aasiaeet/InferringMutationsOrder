@@ -1,0 +1,8 @@
+{
+    "paths" : {
+	"raq":     "C:/Data/IMO/raw",
+	"clean":   "C:/Data/IMO/clean",
+	"scratch": "C:/Scratch/IMO"
+    }
+}
+
