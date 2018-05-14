@@ -1,6 +1,8 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
 \BOOKMARK [1][-]{section.2}{Related Work}{}% 2
 \BOOKMARK [2][-]{subsection.2.1}{Computational Cancer Biology: An Evolutionary Perspective - 2016:}{section.2}% 3
-\BOOKMARK [2][-]{subsection.2.2}{Inferring Tree Models for Oncogenesis from Comparative Genome Hybridization Data - 1999}{section.2}% 4
-\BOOKMARK [2][-]{subsection.2.3}{Estimating an oncogenetic tree when false negatives and positives are present - 2002}{section.2}% 5
-\BOOKMARK [2][-]{subsection.2.4}{Conjunctive Bayesian Network - 2006}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.2}{Inferring Tree Models for Oncogenesis from Comparative Genome Hybridization Data desper99 - 1999}{section.2}% 4
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Model}{subsection.2.2}% 5
+\BOOKMARK [3][-]{subsubsection.2.2.2}{Algorithm}{subsection.2.2}% 6
+\BOOKMARK [2][-]{subsection.2.3}{Estimating an oncogenetic tree when false negatives and positives are present - 2002}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.4}{Conjunctive Bayesian Network - 2006}{section.2}% 8

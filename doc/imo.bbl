@@ -1,0 +1,15 @@
+\begin{thebibliography}{1}
+
+\bibitem{desper99}
+Richard Desper, Feng Jiang, Olli-P Kallioniemi, Holger Moch, Christos~H
+  Papadimitriou, and Alejandro~A Sch{\"a}ffer.
+\newblock Inferring tree models for oncogenesis from comparative genome
+  hybridization data.
+\newblock {\em Journal of computational biology}, 6(1):37--51, 1999.
+
+\bibitem{fearon90}
+Eric~R Fearon and Bert Vogelstein.
+\newblock A genetic model for colorectal tumorigenesis.
+\newblock {\em Cell}, 61(5):759--767, 1990.
+
+\end{thebibliography}
