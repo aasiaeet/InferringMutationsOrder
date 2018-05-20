@@ -1,0 +1,5 @@
+numpy
+pandas
+networkx==2.1
+pydot
+matplotlib
