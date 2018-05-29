@@ -44,8 +44,11 @@ class OncoTree(object):
                                                        , axis=1)
         self.edge_list.drop(['case_id_x', 'case_id_y', 'key'], axis=1, inplace=True)
 
+        # compute the number of cases
         n_cases = len(df['case_id'].unique())
 
+        # compute the edge weights of the graph using the formula:
+        # w_ij = log(p_ij) - log(p_i + p_j) - log(p_j)
         self.edge_list['weight'] = self.edge_list.apply(
             lambda row: np.log(row['count'] / n_cases) -
                         np.log(cases.loc[row['symbol_x']]['count'] / n_cases +
@@ -53,14 +56,40 @@ class OncoTree(object):
                         np.log(cases.loc[row['symbol_y']]['count'] / n_cases)
             , axis=1)
 
+        # create a networkx graph from the edgelist we just created
         self.G = nx.from_pandas_edgelist(self.edge_list, source='symbol_x', target='symbol_y', edge_attr='weight',
                                          create_using=nx.DiGraph())
         return self.G
 
     def find_branching(self):
+        """
+        Find the oncogenetic graph using Edmond's branching algorithm. Needs ``create_init_graph`` function
+        to be called before using this function.
+
+        Returns
+        -------
+        branching: networkx.DiGraph
+            the oncogenetic tree
+
+        """
         self.optimum_branching = nx.algorithms.tree.branchings.maximum_spanning_arborescence(self.G)
         return self.optimum_branching
 
+    def fit(self, df):
+        """
+        Runs the Desper's algorithm on the provided data frame.
+
+        Parameters
+        ----------
+        df: pandas.DataFrame
+            The data matrix. Should have ``Hugo_Symbol`` and ``case_id`` columns.
+        """
+        self.create_init_graph(df)
+        self.find_branching()
+
     def draw(self):
+        """
+        Draws the oncogenetic tree. Needs ``find_branching`` to be called before drawing.
+        """
         pos = nx.drawing.nx_pydot.pydot_layout(self.optimum_branching, prog='dot')
         nx.draw(self.optimum_branching, pos, with_labels=True)
