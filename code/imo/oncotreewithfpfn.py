@@ -94,7 +94,7 @@ class OncoTreeWithFpFn(object):
         self.create_init_graph(df)
         self.find_branching()
 
-    def draw(self, figsize=(20, 15), with_edges=False):  # TODO move this function to utils
+    def draw(self, figsize=(20, 15), with_edges=True):  # TODO move this function to utils
         """
         Plot the graph
 
