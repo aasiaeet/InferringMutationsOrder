@@ -80,39 +80,43 @@ class OncoTreeWithFpFn(object):
                 print("Warning: there is a mutation that has no parent.")
         self.branching_edge = pd.DataFrame(tree)
         self.optimum_branching = nx.from_pandas_edgelist(self.branching_edge, source='symbol_x', target='symbol_y',
-                            edge_attr='weight', create_using=nx.DiGraph())
+                                                         edge_attr='weight', create_using=nx.DiGraph())
 
         return self.optimum_branching
-
 
     def fit(self, df):
         """
         Runs algorithm on the provided data frame.
 
-
         :param df: pandas.DataFrame
             The data matrix. Should have ``Hugo_Symbol`` and ``case_id`` columns.
-
         """
         self.create_init_graph(df)
         self.find_branching()
 
-
-    def draw(self, figsize= (30,20), weight = False):
+    def draw(self, figsize=(20, 15), with_edges=False):  # TODO move this function to utils
         """
         Plot the graph
 
         :param figsize:
         :param weight: show the weight of edge
         """
-        plt.figure(figsize = figsize)
-        if weight == False:
-            pos = nx.drawing.nx_pydot.pydot_layout(self.optimum_branching, prog='dot')
-            nx.draw(self.optimum_branching, pos, with_labels=True)
-        else:
-            pos = nx.drawing.nx_pydot.pydot_layout(self.optimum_branching, prog='dot')
-            nx.draw_networkx_edge_labels(self.optimum_branching, pos,
-                                         edge_labels={(u, v): round(self.optimum_branching.get_edge_data(u, v)['weight'], 2) for u, v in
-                                         self.optimum_branching.edges});
+        # set the figure size
+        plt.figure(figsize=figsize)
 
-            nx.draw(self.optimum_branching, pos, with_labels=True)
+        # save the edge weights for later use
+        edge_weights = {(u, v): round(self.optimum_branching[u][v]['weight'], 2) for u, v in
+                        self.optimum_branching.edges}
+        # change all edge weights of the branching to 1 to get a nice hierarchical tree in drawing
+        for u, v in self.optimum_branching.edges:
+            self.optimum_branching[u][v]['weight'] = 1
+
+        pos = nx.drawing.nx_pydot.pydot_layout(self.optimum_branching, prog='dot')
+        nx.draw(self.optimum_branching, pos, with_labels=True)
+
+        if with_edges:
+            nx.draw_networkx_edge_labels(self.optimum_branching, pos, edge_labels=edge_weights)
+
+        # reset the edge weights to their original weights
+        for u, v in edge_weights:
+            self.optimum_branching[u][v]['weight'] = edge_weights[(u, v)]

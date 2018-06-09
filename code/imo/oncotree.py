@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import networkx as nx
+import matplotlib.pyplot as plt
 
 
 class OncoTree(object):
@@ -87,9 +88,26 @@ class OncoTree(object):
         self.create_init_graph(df)
         self.find_branching()
 
-    def draw(self):
+    def draw(self, figsize=(20, 15), with_edges=True):  # TODO move this function to utils
         """
         Draws the oncogenetic tree. Needs ``find_branching`` to be called before drawing.
         """
+        # set the figure size
+        plt.figure(figsize=figsize)
+
+        # save the edge weights for later use
+        edge_weights = {(u, v): round(self.optimum_branching[u][v]['weight'], 2) for u, v in
+                        self.optimum_branching.edges}
+        # change all edge weights of the branching to 1 to get a nice hierarchical tree in drawing
+        for u, v in self.optimum_branching.edges:
+            self.optimum_branching[u][v]['weight'] = 1
+
         pos = nx.drawing.nx_pydot.pydot_layout(self.optimum_branching, prog='dot')
         nx.draw(self.optimum_branching, pos, with_labels=True)
+
+        if with_edges:
+            nx.draw_networkx_edge_labels(self.optimum_branching, pos, edge_labels=edge_weights)
+
+        # reset the edge weights to their original weights
+        for u, v in edge_weights:
+            self.optimum_branching[u][v]['weight'] = edge_weights[(u, v)]
