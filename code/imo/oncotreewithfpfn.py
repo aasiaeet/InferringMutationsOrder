@@ -2,15 +2,16 @@ import numpy as np
 import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
+
+
 class OncoTreeWithFpFn(object):
     """
     The tree model for oncogenesis by Szabo, Aniko, et al.
 
     This implementation is based on:
 
-        Beerenwinkel, N., Schwarz, R. F., Gerstung, M., & Markowetz, F. (2015).
-        Cancer evolution: Mathematical models and computational inference.
-        Systematic Biology, 64(1), e1–e25. https://doi.org/10.1093/sysbio/syu081
+        Szabo, A., & Boucher, K. (2002). Estimating an oncogenetic treewhen false negatives
+        and positivesare present. Mathematical biosciences, 176(2), 219-236.
 
     Parameters
     ----------
