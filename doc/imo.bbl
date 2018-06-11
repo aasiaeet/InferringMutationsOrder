@@ -12,4 +12,31 @@ Eric~R Fearon and Bert Vogelstein.
 \newblock A genetic model for colorectal tumorigenesis.
 \newblock {\em Cell}, 61(5):759--767, 1990.
 
+\bibitem{jiang98}
+Feng Jiang, Jan Richter, Peter Schraml, Lukas Bubendorf, Thomas Gasser, Guido
+  Sauter, Michael~J{\"o}rg Mihatsch, and Holger Moch.
+\newblock Chromosomal imbalances in papillary renal cell carcinoma: genetic
+  differences between histological subtypes.
+\newblock {\em The American journal of pathology}, 153(5):1467--1473, 1998.
+
+\bibitem{kallioniemi92}
+Anne Kallioniemi, Olli~P Kallioniemi, Damir Sudar, Denis Rutovitz, Joe~W Gray,
+  Fred Waldman, and Dan Pinkel.
+\newblock Comparative genomic hybridization for molecular cytogenetic analysis
+  of solid tumors.
+\newblock {\em Science}, 258(5083):818--821, 1992.
+
+\bibitem{moch96}
+Holger Moch, Joseph~C Presti, Guido Sauter, Niels Buchholz, Paul Jordan,
+  Michael~J Mihatsch, and Frederic~M Waldman.
+\newblock Genetic aberrations detected by comparative genomic hybridization are
+  associated with clinical outcome in renal cell carcinoma.
+\newblock {\em Cancer research}, 56(1):27--30, 1996.
+
+\bibitem{szabo02}
+Aniko Szabo and Kenneth Boucher.
+\newblock Estimating an oncogenetic tree when false negatives and positives are
+  present.
+\newblock {\em Mathematical biosciences}, 176(2):219--236, 2002.
+
 \end{thebibliography}

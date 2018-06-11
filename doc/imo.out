@@ -1,8 +1,13 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
-\BOOKMARK [1][-]{section.2}{Related Work}{}% 2
-\BOOKMARK [2][-]{subsection.2.1}{Computational Cancer Biology: An Evolutionary Perspective - 2016:}{section.2}% 3
-\BOOKMARK [2][-]{subsection.2.2}{Inferring Tree Models for Oncogenesis from Comparative Genome Hybridization Data desper99 - 1999}{section.2}% 4
-\BOOKMARK [3][-]{subsubsection.2.2.1}{Model}{subsection.2.2}% 5
-\BOOKMARK [3][-]{subsubsection.2.2.2}{Algorithm}{subsection.2.2}% 6
-\BOOKMARK [2][-]{subsection.2.3}{Estimating an oncogenetic tree when false negatives and positives are present - 2002}{section.2}% 7
-\BOOKMARK [2][-]{subsection.2.4}{Conjunctive Bayesian Network - 2006}{section.2}% 8
+\BOOKMARK [1][-]{section.2}{Structure-based Categories}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Tree Models}{section.2}% 3
+\BOOKMARK [3][-]{subsubsection.2.1.1}{Inferring Tree Models for Oncogenesis from Comparative Genome Hybridization Data desper99 - 1999}{subsection.2.1}% 4
+\BOOKMARK [3][-]{subsubsection.2.1.2}{Estimating an oncogenetic tree when false negatives and positives are present szabo02}{subsection.2.1}% 5
+\BOOKMARK [2][-]{subsection.2.2}{Forest Models}{section.2}% 6
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Paper Title}{subsection.2.2}% 7
+\BOOKMARK [2][-]{subsection.2.3}{DAG Models}{section.2}% 8
+\BOOKMARK [3][-]{subsubsection.2.3.1}{Conjunctive Bayesian Network - 2006}{subsection.2.3}% 9
+\BOOKMARK [1][-]{section.3}{Other Categories}{}% 10
+\BOOKMARK [2][-]{subsection.3.1}{Causal Models}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.2}{Timed Models}{section.3}% 12
+\BOOKMARK [2][-]{subsection.3.3}{Computational Cancer Biology: An Evolutionary Perspective - 2016:}{section.3}% 13

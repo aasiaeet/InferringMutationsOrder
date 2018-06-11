@@ -1,7 +1,157 @@
 \section{Introduction}
+	TODO: Make a table for all terms getting used in all paper, i.e., make the notation uniform. 
+	TODO: Define that the genetic aberration can be CNA, Mutation, etc. 
+	
+	\section{Structure-based Categories}
+	
+	\subsection{Tree Models}
+	\subsubsection{Inferring Tree Models for Oncogenesis from Comparative Genome Hybridization Data \cite{desper99} - 1999}
+	\label{oncotree}
+	Authors of \cite{desper99} try to generalize the Volgenstien linear notion of tumor progression \cite{fearon90}. 
+	They consider a graph whose vertices are genetic events\footnote{They work with chromosome copy number alterations of renal cancer.} 
+	Instead of a linear (path/chain) growth of mutations, they assume that there is an underlying directed tree (branching) that describes the ordering of the events. 
+	
+	%	Note that this is far back in 1999 and PGM or SCM are not popular yet. 
+	%	So, digesting the notion or probabilistic tree of the authors needs a little bit of effort. 
+	{\bf Model:}
+	Consider the branching\footnote{Branching is a directed rooted tree where all edges have orientations away from the root.} $T = (\cV, \cE, r, \alpha)$ where $r$ is the root representing normal state of the cell and $\alpha$ is a probability function of each edge. 
+	They also introduce a variant where the edges also have attached time random variable and there is a total tumor evolution time where control the end of the random process. 
+	
+	The set of mutations $\cS$ occur if there is a path from the root to every element of $\cS$. 
+	Therefore, all the edges on the path should happen and all the edges neighbor to the path should not happen (otherwise we include something that is not in $\cS$). 
+	
+	\be 
+	\pr (\cS) = \prod_{e \in \cS} \alpha(e) \prod_{e \in \cN(\cS)\setminus \cS} 1 - \alpha(e)
+	\ee 
+	where $\cN$ is the set of all edges neighbor to the corresponding path. 	
+	If there is no path to even a single member of $\cS$, then $\pr(\cS) = 0$.
+	
+	Another way to look at the OncoTree model is through the graphical models lens.
+	Consider the tree graphical model with binary random variables whose structure is represented by the branching $T$.
+	First note that the probability of set $\cN(\cS)$ can be find through marginalization.
+	In other words, we do not care about the value of other nodes:
+	\be 
+	\pr (\cN(\cS)) = \sum_{X_i \notin \cN(\cS)} \prod_{X_i \in \cV} \pr(X_i | \text{pa}(X_i)) 
+	\ee 
+	When we are interested in set $\cS$ happening, it translates to a specific assignment of binary values to $\cN(\cS)$, i.e., all of the random variables in the set $\cS$ are one and all of the neighbors of those  nodes in the tree (minus themselves) are zero, i.e., $\cN(\cS) \setminus \cS$. 
+	Therefore we can write the probability of $\cS$ happening as:
+	\be 
+	\nr 
+	\pr (\cS) &=& \pr (\forall X_i \in \cS: X_i = 1, \forall X_i \in \cN(\cS) \setminus \cS = 0) 
+	\\ \nr 
+	&=& \prod_{X_i \in \cS} \pr(X_i = 1 | \text{pa}(X_i) = 1) \prod_{X_i \in \cN(\cS)\setminus \cS} \pr(X_i = 1| \text{pa}(X_i) = 1)
+	\\ \nr 
+	&=& \prod_{X_i \in \cS} \pr(X_i = 1 | \text{pa}(X_i) = 1) \prod_{X_i \in \cN(\cS)\setminus \cS} \left(1 - \pr(X_i = 1| \text{pa}(X_i) = 1)\right)
+	\ee 
+	It is easy to see that the edge probabilities are the conditional probabilities, i.e., $\alpha(e_{ij}) = \pr(X_j = 1|X_i = 1)$.
+	
+	{\bf Algorithm:}
+	Note that we primarily want to learn the structure of the tree not the conditional probabilities $\alpha(e)$s. 
+	To simplify the notation, let $p_i = \pr(X_i = 1)$, $p_{ij} = \pr(X_i = 1, X_j = 1)$, and $p_{j|i} = \pr(X_j = 1|X_i = 1)$. 
+	We define the weight of edges between mutation $i$ and $j$ as: $w_{ij} = \log \frac{p_i}{p_i + p_j} \frac{p_{j|i}}{p_j}$.
+	
+	The weights captures the intuition behind ``$i$ being the parent of $j$'': If $i$ is more frequent and when it happens it increases the probability of $j$ happening. 
+	Authors show that the maximum branching or the graph constructed with edge weights $w_{ij}$ is exactly the tree $T$. 
+	To compute the weights from the data we replace the probabilities with the frequencies: $w_{ij} = \log \frac{f_{ij}}{f_j(f_i + f_j)}$.
+	
+	Therefore, we are after a maximum directed tree in a weighted graph. 
+	To filter out false positives and reduce the size of the problem, we focus on a subset of mutations, i.e., maximum-weight clique of the graph. 
+	Then we use the Edmond's algorithm which runs in $O(n^2)$  and finds the minimum branching of the graph with negated edge weights $-w_{ij}$. 
+	Algorithm \ref{alg1} summarizes the pseudo-code of the method.
+%	Note that $w_{ij} < 0$ and therefore the maximum branching problem here can be converted to the minimum branching problem which is exactly what Edmond's algorithm do. 
+%	Since the Edmond's method takes in the full graph, here they use a heuristic (I didn't look at it, and I think it was not mentioned in the paper) to remove some edges and then start the Edmond's method. 
+	
+	\begin{algorithm}[t]
+		\caption{OncoTree}
+		\label{alg1}
+		\begin{algorithmic}[1]
+			\STATE {\bfseries input:} Frequencies of mutations $f_i, f_{ij}$, a threshold $t$, and a clique size $s$
+			\STATE {\bfseries output:} Branching $T = (\cV, \cE, r, p)$
+			\STATE $w_{ij} \leftarrow \indic(f_{ij} > t) \log \frac{f_{ij}}{f_j(f_i + f_j)}$
+			\STATE $G = (\cV, \cW)$, where $\cV$ and $\cW$ are sets of all mutations and edge weights.
+			\STATE Optional: Focus on maximum-weight clique of size $s$ in $G$
+			\STATE $w_{ij} \leftarrow -w_{ij}$
+			\STATE Compute the minimum branching of $G$: $T(\cV, \cE, r) \leftarrow \text{Edmond's}(G)$
+			\STATE Compute edge probabilities of branching as:  $p_{j|i} \leftarrow \frac{f_{ij}}{f_i}$.
+		\end{algorithmic}
+	\end{algorithm}
+	
+%	Side note: note that $p_i$ is the summation over all possible mutations where $i$ occured, i.e., there are valid (reachable from $r$) nodes in the $\cS$ and also $i \in \cS$. 
+	
+	Authors prove that, the computed branching is the correct one with high probability for enough number of samples and when there is no false positive or negative, and finally the tree is not \emph{skewed}. 
+	
+	Skewness means that for three nodes $i$, $j$, and $k$ where $k$ is the lowest common ancestor of the other, $p_{j|i} > p_{i\cup j|k} = p_{i|k} + p_{j|k} - p_{i, j|k}$. 
+	Intuitively, in this case it is hard to tell apart causation of $i\rightarrow j$ from $k\rightarrow j$. 
+	They claim that untimed trees are not skewed which I don't get. 
+	
+	{\bf Summary:}	
+	For an un-timed tree, with enough number of samples with high probability OncoTree finds the ground truth tree. 
+	For timed tree, as long as it is un-skewed, they can recover it. 
+	For path trees, because of the equivalence (for each timed path tree the corresponding distribution can be represented by an un-timed counterpart), they can recover the ground truth. 
+	
+	{\bf Dataset:}
+	A set of 117 cases of clear cell renal	cell carcinoma collected using CGH \cite{kallioniemi92} as described in \cite{moch96}. 
+	The frequency threshold $t$ was set to 5 and the size of maximum-weighted clique $s$ to 7. 
+	
+	\subsubsection{Estimating an oncogenetic tree when false negatives and positives are present \cite{szabo02}}
+	{\bf Model:}
+	Here the model is exactly similar to the OncoTree model of Section \ref{oncotree} and authors only present another algorithm for finding the maximum spanning branching which has the same complexity of $O(n^2)$ but the proof is invariant to any monotone transformation of the edge weight $w_{ij} = \log \frac{p_i}{p_i + p_j} \frac{p_{j|i}}{p_j}$ and to some degree to false positive and negative.
+	
+	In particular, let's $\epsilon_+$ and $\epsilon_-$ be the uniform (similar for all patients) false positive and negative probabilities respectively. 
+	Then, if $\epsilon_+ + \epsilon_- < 1$ and $\epsilon_+ < (p_{\min})^{1/2} (1 - \epsilon_+ - \epsilon_-)$ for enough number of samples the proposed algorithm recovers the true unskewed branching with high probability.	
+	
+	{\bf Algorithm:}
+	The algorithm is presented in Algorithm \ref{alg2}. 
+	Intuitively, we first find the least frequent mutation without an assigned parent and then set its parent to its neighbor with highest weighted.  
+	
+	\begin{algorithm}[t]
+		\caption{OncoTree with False Positive and Negative}
+		\label{alg2}
+		\begin{algorithmic}[1]
+			\STATE {\bfseries input:} Frequencies of mutations $f_i, f_{ij}$, a threshold $t$
+			\STATE {\bfseries output:} Branching $T = (\cV, \cE, r, p)$
+			\STATE Compute edge weights: $w_{ij} \leftarrow \indic(f_{ij} > t) \log \frac{f_{ij}}{f_j(f_i + f_j)}$
+			\STATE Form $G = (\cV, \cW)$, where $\cV$ and $\cW$ are sets of all mutations and edge weights.
+			\STATE $\cS_0 \leftarrow \emptyset$, $\cE_0 \leftarrow \emptyset$
+			\FOR{$v = 1$ to $|\cV|$}
+			\STATE $i \leftarrow \argmin_{k \in \cV \setminus \cS_t} f_k, \quad j \leftarrow \argmax_{k \in \cV \setminus \cS_t} w_{ki}$
+			\STATE $\cS_{t+1} \leftarrow \cS_t \cup {j}, \quad \cE_{t+1} \leftarrow \cE_{t+1} \cup {(j, i)} $
+			\ENDFOR 
+			\STATE Set root $r$ to the node without parent.
+			\STATE Form the branching $T = (\cV, \cE_{|\cV|}, r)$
+			\STATE Compute edge probabilities of branching as:  $p_{j|i} \leftarrow \frac{f_{ij}}{f_i}$.
+		\end{algorithmic}
+	\end{algorithm}
 	
 	
-	\section{Related Work}
+	{\bf Dataset:} 
+	The CGH \cite{kallioniemi92} data for 25 samples with renal cell carcinoma from \cite{jiang98} study was used. 
+	The frequency threshold $t$ was set to $5$ which resulted in 11 aberrations. 
+
+	
+	
+	\subsection{Forest Models}
+	
+	\subsubsection{Paper Title}
+	{\bf Model:}
+	
+	{\bf Algorithm:}
+	
+	{\bf Summary:}
+	
+	{\bf Dataset:}
+	
+	
+	\subsection{DAG Models}
+
+	\subsubsection{Conjunctive Bayesian Network - 2006}
+
+	\section{Other Categories}
+	\subsection{Causal Models}
+	
+	\subsection{Timed Models}	
+	
+	
 	\subsection{Computational Cancer Biology: An Evolutionary Perspective - 2016:}
 	
 	Introduction:
@@ -66,73 +216,11 @@
 	Sparse group lass for detecting genes in the pathway?  
 	
 	
-	\subsection{Inferring Tree Models for Oncogenesis from Comparative Genome Hybridization Data \cite{desper99} - 1999}
-	Authors of \cite{desper99} try to generalize the Volgenstien linear notion of tumor progression \cite{fearon90}. 
-	They consider a graph whose vertices are genetic events \footnote{They work with chromosome copy number alterations of renal cancer.} 
-	Instead of a linear (path/chain) growth of mutations, they assume that there is an underlying directed tree (branching) that describes the ordering of the events. 
-	
-%	Note that this is far back in 1999 and PGM or SCM are not popular yet. 
-%	So, digesting the notion or probabilistic tree of the authors needs a little bit of effort. 
-	\subsubsection{Model}
-	Consider the branching\footnote{Branching is a directed rooted tree where all edges have orientations away from the root.} $T = (\cV, \cE, r, \alpha)$ where $r$ is the root representing normal state of the cell and $\alpha$ is a probability function of each edge. 
-	They also introduce a variant where the edges also have attached time random variable and there is a total tumor evolution time where control the end of the random process. 
-	
-	The set of mutations $\cS$ occur if there is a path from the root to every element of $\cS$. 
-	Therefore, all the edges on the path should happen and all the edges neighbor to the path should not happen (otherwise we include something that is not in $\cS$. 
-	
-	\be 
-	\pr (\cS) = \prod_{e \in \text{path}(r \rightarrow \cS)} \alpha(e) \prod_{e \in \cN(\text{path}(r \rightarrow \cS))} 1 - \alpha(e)
-	\ee 
-	where $\cN$ is the set of all edges neighbor to the corresponding path. 	
-	If there is no path to even a single member of $\cS$, then $\pr(\cS) = 0$.
-	
-	\subsubsection{Algorithm}
-	Authors define the weight of edges between mutation $i$ and $j$ as: $w_{ij} = \log \frac{p_i}{p_i + p_j} \frac{p_{ij}}{p_i p_j}$.
-	Note that if the probability of $j$ happening given $i$ is high and also $i$ is more frequent than $j$ then it makes sense to assume that $i$ is the cause/parent of $j$ and also $w_{ij}$ becomes bigger than $w_{ji}$.
-	Therefore, we are after a maximum directed tree in the complete weighted graph. 
-	This can be computed $O(n^2)$ using generic maximum spanning tree algorithm using the Edmond's algorithm. 
-	Note that $w_{ij} < 0$ and therefore the maximum branching problem here can be converted to the minimum branching problem which is exactly what Edmond's algorithm do. 
-	Since the Edmond's method takes in the full graph, here they use a heuristic (I didn't look at it, and I think it was not mentioned in the paper) to remove some edges and then start the Edmond's method. 
-	
-	So here is the pseudo-code of the algorithm:
-	\begin{itemize}
-		\item Compute the weights as $w_{ij} \leftarrow \log \frac{p_i}{p_i + p_j} \frac{p_{ij}}{p_i p_j}$ where $p$s are counted from data. 
-		\item Negate the weights $w_{ij}  \leftarrow -w_{ij} $. 
-		\item Do some \emph{smart} pre-processing and remove some weights (We can skip this for now). 
-		\item Run the Edmonds' algorithm for optimum branching (look it up in Wikipedia and there should be Python code on the Web) and find the minimum branching. 
-	\end{itemize}
-	
-	Side note: note that $p_i$ is the summation over all possible mutations where $i$ occured, i.e., there are valid (reachable from $r$) nodes in the $\cS$ and also $i \in \cS$. 
-	
-	Authors prove that, the found maximum spanning tree is the correct one when number of samples goes to infinity, there is no false positive or negative, and finally the tree is not skewed. 
-	
-	Skewness means that for three nodes $i$, $j$, and $k$ where $k$ is the lowest common ancestor of the other, $p_{j|i} > p_{i\cup j|k} = p_{i|k} + p_{j|k} - p_{i, j|k}$. 
-	Intuitively, in this case it is hard to tell apart causation of $i\rightarrow j$ from $k\rightarrow j$. 
-	They claim that untimed trees are not skewed which I don't get. 
-	
-	So, basically their result is the following:
-	
-	For an untimed tree, with enough number of samples with high probability we find the ground truth tree. 
-	For timed tree, as long as it is unskewed we can recover it. 
-	For path trees, because of the equivalence (for each timed path tree the corresponding distribution can be represented by an untimed counterpart), we can recover the ground truth. 
 	
 	
 	
 	
-	\subsection{Estimating an oncogenetic tree when false negatives and positives are present - 2002}
 	
-	Here authors present another algorithm for finding the maximum spanning tree which has the same complexity but the proof is resistant to any monotone transform of the above suggested $w_{ij}$. 
-	Also they show if the false positive and negative rates are somehow bounded with enough number of samples (to estimate the $p_i$s, if we know them the recovery is exact) recovery is possible. 
-	
-	The algorithm is simple:
-	\begin{itemize}
-		\item Start with an empty set $\cS_0$
-		\item $i =  \argmin_{k \in \cV \setminus \cS_t} p_k $
-		\item $\cS_{t+1} = \cS_t \cup \{\argmax_{j \in \cV \setminus \cS_t} w_{ji}\} $
-	\end{itemize}
-	
-	
-	
-	\subsection{Conjunctive Bayesian Network - 2006}
+
 	
 	
