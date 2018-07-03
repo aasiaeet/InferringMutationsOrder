@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/W32TeX) (preloaded format=pdflatex 2017.1.22)  11 JUN 2018 13:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/W32TeX) (preloaded format=pdflatex 2017.1.22)  2 JUL 2018 21:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -866,42 +866,98 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 
 LaTeX Font Warning: Command \large invalid in math mode on input line 113.
 
-[3] [4]) (./sec/zeinab.tex) (./imo.bbl [5])
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\@ifnextchar' on input line 145.
+
+
+LaTeX Warning: Citation `?' on page 3 undefined on input line 148.
+
+[3]
+
+LaTeX Font Warning: Command \large invalid in math mode on input line 160.
+
+
+LaTeX Font Warning: Command \large invalid in math mode on input line 160.
+
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 170.
+
+(c:/texlive/2016/texmf-dist/tex/latex/psnfss/omsptm.fd
+File: omsptm.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 170.
+
+
+LaTeX Font Warning: Command \large invalid in math mode on input line 182.
+
+
+LaTeX Font Warning: Command \large invalid in math mode on input line 182.
+
+
+LaTeX Font Warning: Command \large invalid in math mode on input line 182.
+
+
+LaTeX Font Warning: Command \large invalid in math mode on input line 183.
+
+
+LaTeX Font Warning: Command \large invalid in math mode on input line 183.
+
+
+LaTeX Font Warning: Command \large invalid in math mode on input line 190.
+
+
+LaTeX Font Warning: Command \large invalid in math mode on input line 190.
+
+
+LaTeX Font Warning: Command \large invalid in math mode on input line 192.
+
+
+LaTeX Font Warning: Command \large invalid in math mode on input line 192.
+
+[4] [5] [6]) (./sec/zeinab.tex) (./imo.bbl)
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 51.
- [6]
+ [7]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 51.
  (./imo.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 51.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 51.
 Package rerunfilecheck Info: File `imo.out' has not changed.
-(rerunfilecheck)             Checksum: 418E757932E19BB9277094563C1D5962;1044.
+(rerunfilecheck)             Checksum: 1D41A43E9D4F0D4F5BB17B75A9EB499E;1045.
+
+
+LaTeX Warning: There were undefined references.
+
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 51.
  ) 
 Here is how much of TeX's memory you used:
- 9212 strings out of 493013
- 131392 string characters out of 6137008
- 229069 words of memory out of 5000000
- 12520 multiletter control sequences out of 15000+600000
- 34729 words of font info for 83 fonts, out of 8000000 for 9000
+ 9259 strings out of 493013
+ 132052 string characters out of 6137008
+ 233157 words of memory out of 5000000
+ 12538 multiletter control sequences out of 15000+600000
+ 35807 words of font info for 84 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,13n,38p,445b,608s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,13n,38p,445b,790s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/texlive/2016/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2016/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2016/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmmi5.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmmi7.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
-><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texliv
-e/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2016/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb><c:/texlive/2016/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmsy7.pfb><c:/texlive/2016/texmf-dist/fonts/type1
-/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/urw
-/times/utmb8a.pfb><c:/texlive/2016/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-<c:/texlive/2016/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on imo.pdf (6 pages, 155114 bytes).
+nts/type1/public/amsfonts/cm/cmbx7.pfb><c:/texlive/2016/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmex10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/am
+sfonts/cmextra/cmex7.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmmi10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
+5.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/
+texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/20
+16/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb><c:/texlive/2016/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2016/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmsy5.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmsy7.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/m
+sbm10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texl
+ive/2016/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2016/texmf-dis
+t/fonts/type1/urw/times/utmri8a.pfb>
+Output written on imo.pdf (7 pages, 190784 bytes).
 PDF statistics:
- 202 PDF objects out of 1000 (max. 8388607)
- 178 compressed objects within 2 object streams
- 54 named destinations out of 1000 (max. 500000)
+ 256 PDF objects out of 1000 (max. 8388607)
+ 227 compressed objects within 3 object streams
+ 79 named destinations out of 1000 (max. 500000)
  105 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,5 +1,10 @@
 \begin{thebibliography}{1}
 
+\bibitem{beerenwinkel07}
+Niko Beerenwinkel, Nicholas Eriksson, and Bernd Sturmfels.
+\newblock Conjunctive bayesian networks.
+\newblock {\em Bernoulli}, pages 893--909, 2007.
+
 \bibitem{desper99}
 Richard Desper, Feng Jiang, Olli-P Kallioniemi, Holger Moch, Christos~H
   Papadimitriou, and Alejandro~A Sch{\"a}ffer.
