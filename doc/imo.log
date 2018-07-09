@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/W32TeX) (preloaded format=pdflatex 2017.1.22)  2 JUL 2018 21:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/W32TeX) (preloaded format=pdflatex 2017.1.22)  9 JUL 2018 16:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -868,62 +868,103 @@ LaTeX Font Warning: Command \large invalid in math mode on input line 113.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\@ifnextchar' on input line 145.
+(hyperref)                removing `\@ifnextchar' on input line 132.
+
+[3]pdfTeX warning (ext4): destination with the same identifier (name{equation.2
+.3}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.141 	\be
+          pdfTeX warning (ext4): destination with the same identifier (name{equ
+ation.2.3}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.141 	\be
+          pdfTeX warning (ext4): destination with the same identifier (name{equ
+ation.2.3}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.141 	\be
+          pdfTeX warning (ext4): destination with the same identifier (name{equ
+ation.2.3}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.141 	\be
+          
+Overfull \hbox (42.98715pt too wide) in paragraph at lines 143--146
+\OT1/ptm/m/n/10 Note that the max-i-miza-tion in on two dif-fer-ent pa-ram-e-te
+r, i.e., $[][] \OT1/cmr/m/n/10 = [][] [][]$\OT1/ptm/m/n/10 .
+ []
+
+[4]
+
+Package amsmath Warning: Foreign command \atopwithdelims;
+(amsmath)                \frac or \genfrac should be used instead
+(amsmath)                 on input line 175.
 
 
-LaTeX Warning: Citation `?' on page 3 undefined on input line 148.
+Overfull \hbox (37.56155pt too wide) in alignment at lines 176--179
+ [][][] []
+ []
 
-[3]
-
-LaTeX Font Warning: Command \large invalid in math mode on input line 160.
-
-
-LaTeX Font Warning: Command \large invalid in math mode on input line 160.
-
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 170.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 192.
 
 (c:/texlive/2016/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 170.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 192.
 
 
-LaTeX Font Warning: Command \large invalid in math mode on input line 182.
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\@ifnextchar' on input line 219.
 
 
-LaTeX Font Warning: Command \large invalid in math mode on input line 182.
+LaTeX Warning: Citation `?' on page 5 undefined on input line 222.
+
+[5]
+
+LaTeX Font Warning: Command \large invalid in math mode on input line 234.
 
 
-LaTeX Font Warning: Command \large invalid in math mode on input line 182.
+LaTeX Font Warning: Command \large invalid in math mode on input line 234.
 
 
-LaTeX Font Warning: Command \large invalid in math mode on input line 183.
+LaTeX Font Warning: Command \large invalid in math mode on input line 256.
 
 
-LaTeX Font Warning: Command \large invalid in math mode on input line 183.
+LaTeX Font Warning: Command \large invalid in math mode on input line 256.
 
 
-LaTeX Font Warning: Command \large invalid in math mode on input line 190.
+LaTeX Font Warning: Command \large invalid in math mode on input line 256.
 
 
-LaTeX Font Warning: Command \large invalid in math mode on input line 190.
+LaTeX Font Warning: Command \large invalid in math mode on input line 257.
 
 
-LaTeX Font Warning: Command \large invalid in math mode on input line 192.
+LaTeX Font Warning: Command \large invalid in math mode on input line 257.
 
 
-LaTeX Font Warning: Command \large invalid in math mode on input line 192.
+LaTeX Font Warning: Command \large invalid in math mode on input line 264.
 
-[4] [5] [6]) (./sec/zeinab.tex) (./imo.bbl)
+
+LaTeX Font Warning: Command \large invalid in math mode on input line 264.
+
+
+LaTeX Font Warning: Command \large invalid in math mode on input line 266.
+
+
+LaTeX Font Warning: Command \large invalid in math mode on input line 266.
+
+[6] [7]) (./sec/zeinab.tex) (./imo.bbl [8])
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 51.
- [7]
+ [9]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 51.
  (./imo.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 51.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 51.
 Package rerunfilecheck Info: File `imo.out' has not changed.
-(rerunfilecheck)             Checksum: 1D41A43E9D4F0D4F5BB17B75A9EB499E;1045.
+(rerunfilecheck)             Checksum: 5EA190429E9DC5C4B19C59C1AEE0BB5C;1180.
 
 
 LaTeX Warning: There were undefined references.
@@ -931,13 +972,13 @@ LaTeX Warning: There were undefined references.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 51.
  ) 
 Here is how much of TeX's memory you used:
- 9259 strings out of 493013
- 132052 string characters out of 6137008
- 233157 words of memory out of 5000000
- 12538 multiletter control sequences out of 15000+600000
+ 9287 strings out of 493013
+ 132363 string characters out of 6137008
+ 229665 words of memory out of 5000000
+ 12547 multiletter control sequences out of 15000+600000
  35807 words of font info for 84 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,13n,38p,445b,790s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,13n,38p,576b,786s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/texlive/2016/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2016/texmf-dist/fo
 nts/type1/public/amsfonts/cm/cmbx7.pfb><c:/texlive/2016/texmf-dist/fonts/type1/
@@ -954,10 +995,10 @@ c/amsfonts/cm/cmsy5.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts
 sbm10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texl
 ive/2016/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2016/texmf-dis
 t/fonts/type1/urw/times/utmri8a.pfb>
-Output written on imo.pdf (7 pages, 190784 bytes).
+Output written on imo.pdf (9 pages, 205692 bytes).
 PDF statistics:
- 256 PDF objects out of 1000 (max. 8388607)
- 227 compressed objects within 3 object streams
- 79 named destinations out of 1000 (max. 500000)
- 105 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 295 PDF objects out of 1000 (max. 8388607)
+ 264 compressed objects within 3 object streams
+ 98 named destinations out of 1000 (max. 500000)
+ 113 words of extra memory for PDF output out of 10000 (max. 10000000)
 

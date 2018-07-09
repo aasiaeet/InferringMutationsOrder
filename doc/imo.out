@@ -3,11 +3,12 @@
 \BOOKMARK [2][-]{subsection.2.1}{Tree Models}{section.2}% 3
 \BOOKMARK [3][-]{subsubsection.2.1.1}{Inferring Tree Models for Oncogenesis from Comparative Genome Hybridization Data desper99}{subsection.2.1}% 4
 \BOOKMARK [3][-]{subsubsection.2.1.2}{Estimating an oncogenetic tree when false negatives and positives are present szabo02}{subsection.2.1}% 5
-\BOOKMARK [2][-]{subsection.2.2}{Forest Models}{section.2}% 6
-\BOOKMARK [3][-]{subsubsection.2.2.1}{Paper Title}{subsection.2.2}% 7
-\BOOKMARK [2][-]{subsection.2.3}{DAG Models}{section.2}% 8
-\BOOKMARK [3][-]{subsubsection.2.3.1}{Conjunctive Bayesian Network beerenwinkel07}{subsection.2.3}% 9
-\BOOKMARK [1][-]{section.3}{Other Categories}{}% 10
-\BOOKMARK [2][-]{subsection.3.1}{Causal Models}{section.3}% 11
-\BOOKMARK [2][-]{subsection.3.2}{Timed Models}{section.3}% 12
-\BOOKMARK [2][-]{subsection.3.3}{Computational Cancer Biology: An Evolutionary Perspective - 2016:}{section.3}% 13
+\BOOKMARK [3][-]{subsubsection.2.1.3}{A global structural EM algorithm for a model of cancer progression tofigh11}{subsection.2.1}% 6
+\BOOKMARK [2][-]{subsection.2.2}{Forest Models}{section.2}% 7
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Paper Title}{subsection.2.2}% 8
+\BOOKMARK [2][-]{subsection.2.3}{DAG Models}{section.2}% 9
+\BOOKMARK [3][-]{subsubsection.2.3.1}{Conjunctive Bayesian Network beerenwinkel07}{subsection.2.3}% 10
+\BOOKMARK [1][-]{section.3}{Other Categories}{}% 11
+\BOOKMARK [2][-]{subsection.3.1}{Causal Models}{section.3}% 12
+\BOOKMARK [2][-]{subsection.3.2}{Timed Models}{section.3}% 13
+\BOOKMARK [2][-]{subsection.3.3}{Computational Cancer Biology: An Evolutionary Perspective - 2016:}{section.3}% 14

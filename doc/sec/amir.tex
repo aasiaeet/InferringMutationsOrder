@@ -129,6 +129,80 @@
 	The frequency threshold $t$ was set to $5$ which resulted in 11 aberrations. 
 
 	
+	\subsubsection{A global structural EM algorithm for a model of cancer progression \cite{tofigh11}}
+	{\bf Model:} Here we assume that our model consists of two sets of nodes: observable mutations which are detected by a sequencing method and hidden/latent actual mutations that are present in the cell line. By this assumption, we can simply model both false positive and false negative observations. The structure is still a tree whose internal nodes are latent nodes and leaves are the observed mutations. Since we have a combination of observed and latent random variables EM algorithm is a good fit for learning the structure. 
+	
+	
+	
+	
+	{\bf Algorithm:}
+	Consider the structure $\cT = (T, \Theta)$ were $T = (\cV, \cE)$ is the directed tree and $\Theta$ is the set of conditional probability tables (CPT). 
+	The EM algorithm learn $\cT$ iteratively by maximizing the complete log-likelihood $Q(\cT'; \cT)$: 
+	\be 
+	\cT' = \argmax_{\cT'} \sum_{i = 1}^{n} \sum_{z_{1:p}} \pr (z_{1:p} | \x_i, \cT) \log \pr (z_{1:p}, \x_i | \cT')
+	\ee 
+	Note that the maximization in on two different parameter, i.e., $\argmax_{\cT'} = \argmax_{T'} \argmax_{\Theta'}$. 
+	Keeping this in mind, we rewrite the $Q$ as follows:
+	\be 
+	\label{q}
+	Q(\cT'; \cT) &=& \sum_{(u,v) \in \cE} \Bigg( \sum_{a, b \in \{0, 1\}} \log \pr(Z_v = b| Z_u = a, \cT') A_{(u,v)}(a, b) 
+	\\ \nr 
+	&+& \sum_{a, c \in \{0, 1\}} \log \pr(X_v = c| Z_v = a, \cT') B_{v}(c, a) \Bigg)
+	\ee 
+	where
+	\be 
+	\label{ab}
+	A_{(u,v)}(a, b) &=&  \sum_{i = 1}^{n} \pr(Z_u = a, Z_v = b | \x_i, \cT)
+	\\ \nr 
+	B_{v}(c, a) &=&  \sum_{\x_i: \x_i(v) = c} \pr(Z_v = a | \x_i, \cT).
+	\ee 
+	are quantities that we can compute from data and $\cT$, the estimated model by the EM in the previous step.
+	To elaborate, note that  $\pr(Z_v = a | \x_i, \cT)$ is the marginal distribution of $Z_v$ over the tree $T$ given the evidence nodes $X_{1:p} = \x_i$ which can be computed by the sum-product algorithm. 
+	Also, the joint probability of $\pr(Z_u = a, Z_v = b | \x_i, \cT) = \pr(Z_u = a| Z_v = b,  \x_i, \cT) \pr(Z_v = b|  \x_i, \cT)$ can be computed by running the sum-product algorithm twice with two different set of evidences, i.e., $X_{1:p} = \x_i, Z_v = b$ and $X_{1:p} = \x_i$. 
+	
+	Now we assume that the $T'$ is given, so we only optimize over $\Theta'$, which means that we should find the $\pr(Z_v = b| Z_u = a, \cT')$ and $\pr(X_v = c| Z_v = a, \cT')$ by maximizing each summands of \eqref{q} independently, subject to the constraint that the final values should be probabilities, i.e., normalized to one which leads to:
+	\be 
+	\label{condprob} 
+	\forall (u, v) \in \cE': \pr(Z_v = b| Z_u = a) = \frac{A_{(u,v)}(a, b) }{\sum_{a \in \{0, 1\}} A_{(u,v)}(a, b) }
+	\\ \nr 
+	\forall v \in \cV: \pr(X_v = c| Z_v = a) = \frac{B_{v}(c, a) }{\sum_{c \in \{0, 1\}} B_{v}(c, a) }
+	\ee 
+	where $T' = (\cV, \cE')$. This concludes $\argmax_{\Theta'}$ given $T'$. 
+	
+	Now, we should do the uttermost optimization, i.e., $\argmax_{T'}$. 
+	First note that for trees $T'$ and $T''$ the values of the summands of \eqref{q} for each edge $(u, v)$ are exactly the same. 
+	So, we can compute the values of the summands of \eqref{q} as edge weights for all edges in the complete graph and run the Edmond's algorithm to find the maximum weighted tree. 
+	In other words, we compute the following edge weights for all possible $p \choose 2$ edges:
+	\be 
+	\label{weight}
+	w_{uv} =  \sum_{z_u, z_v \in \{0, 1\}} \log \pr(z_v| z_u) A_{(u,v)}(z_u,z_v; \cT) + \sum_{z_v, x_v \in \{0, 1\}} \log \pr(x_v| z_v) B_{v}(x_v, z_v; \cT),
+	\ee 
+	negate them and then run the Edmond's algorithm to compute $T'$. 
+	Algorithm \ref{alg4} summarizes the major steps to run the EM for HOT model. 
+	
+	\begin{algorithm}[t]
+		\caption{HOT: Hidden-variable Oncogenetic Tree}
+		\label{alg4}
+		\begin{algorithmic}[1]
+			\STATE {\bfseries input:} Input binary data matrix $\X \in \reals^{n \times p}$, a number of iterations $i$
+			\STATE {\bfseries output:} $\cT^{(i)} = (T^{(i)}, \Theta^{(i)})$ where $T^{(i)} = (\cV, \cE^{(i)}, r^{(i)})$
+			
+			\STATE Initialize $\cT^{(0)} = (T^{(0)}, \Theta^{(0)})$.
+			
+			\COMMENT{Iterations of the EM algorithm.}
+			\FOR{$t = 0$ to $i$}
+			\STATE $\forall u,v \in \cV$: Given $\cT^{(t)}$ compute $A_{(u,v)}$ and $B_{v}$  from \eqref{ab}.  
+			\STATE $\forall u,v \in \cV$: Compute probabilities of \eqref{condprob}, i.e., $\Theta^{(t+1)}$
+			\STATE $\forall u,v \in \cV$: Compute the edge weights $w_{uv}$ from \eqref{weight}
+			\STATE $w_{uv} \leftarrow - w_{uv}$
+			\STATE Find the minimum branching of the complete graph $G$: $T^{(t+1)} \leftarrow \text{Edmond's}(G)$
+			\ENDFOR 
+		\end{algorithmic}
+	\end{algorithm}
+	
+	
+	{\bf Dataset:}
+	
 	
 	\subsection{Forest Models}
 	

@@ -3,49 +3,46 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: imo.aux
 The style file: plain.bst
 Database file #1: imo2018.bib
-Repeated entry---line 159 of file imo2018.bib
- : @article{fearon90
- :                  ,
-I'm skipping whatever remains of this entry
-You've used 7 entries,
+Warning--I didn't find a database entry for "?"
+You've used 8 entries,
             2118 wiz_defined-function locations,
-            548 strings with 5505 characters,
-and the built_in function-call counts, 3077 in all, are:
-= -- 297
-> -- 196
-< -- 1
-+ -- 78
-- -- 70
-* -- 268
-:= -- 524
-add.period$ -- 21
-call.type$ -- 7
-change.case$ -- 56
+            555 strings with 5719 characters,
+and the built_in function-call counts, 3592 in all, are:
+= -- 348
+> -- 219
+< -- 2
++ -- 88
+- -- 78
+* -- 301
+:= -- 597
+add.period$ -- 24
+call.type$ -- 8
+change.case$ -- 63
 chr.to.int$ -- 0
-cite$ -- 7
-duplicate$ -- 86
-empty$ -- 193
-format.name$ -- 70
-if$ -- 607
+cite$ -- 8
+duplicate$ -- 109
+empty$ -- 234
+format.name$ -- 78
+if$ -- 723
 int.to.chr$ -- 0
-int.to.str$ -- 7
-missing$ -- 7
-newline$ -- 38
-num.names$ -- 14
-pop$ -- 44
+int.to.str$ -- 8
+missing$ -- 8
+newline$ -- 43
+num.names$ -- 16
+pop$ -- 54
 preamble$ -- 1
-purify$ -- 49
+purify$ -- 55
 quote$ -- 0
-skip$ -- 63
+skip$ -- 83
 stack$ -- 0
-substring$ -- 212
-swap$ -- 16
-text.length$ -- 1
+substring$ -- 250
+swap$ -- 27
+text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 28
+type$ -- 32
 warning$ -- 0
-while$ -- 29
-width$ -- 8
-write$ -- 79
-(There was 1 error message)
+while$ -- 34
+width$ -- 9
+write$ -- 90
+(There was 1 warning)

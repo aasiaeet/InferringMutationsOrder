@@ -44,4 +44,10 @@ Aniko Szabo and Kenneth Boucher.
   present.
 \newblock {\em Mathematical biosciences}, 176(2):219--236, 2002.
 
+\bibitem{tofigh11}
+Ali Tofigh, Erik S{\c j}lund, Mattias {\c H}glund, and Jens Lagergren.
+\newblock A global structural em algorithm for a model of cancer progression.
+\newblock In {\em Advances in neural information processing systems}, pages
+  163--171, 2011.
+
 \end{thebibliography}
