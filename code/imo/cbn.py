@@ -50,12 +50,31 @@ class CBN(object):
         self._find_structure(u)
         self._find_probabilities(u)
 
-    def draw(self, figsize=(20, 15), with_node_probs=True):
+    def draw(self,
+             figsize=(20, 15),
+             with_node_probs=True,
+             node_color='white',
+             node_size=10000,
+             font_color='black',
+             font_size=20,
+             width_=3,
+             arrowsize_=30,
+             edge_label_size=20,
+             edge_node_color='black'):
         plt.figure(figsize=figsize)
         pos = nx.drawing.nx_pydot.pydot_layout(self.G, prog='dot')
         labels = {}
         if with_node_probs:
             for e in self.G.nodes:
                 labels[e] = e + ':' + str(nx.get_node_attributes(self.G, 'theta')[e])
-        nx.draw(self.G, pos, labels=labels)
-
+        nx.draw(self.G,
+                pos,
+                labels=labels,
+                node_color=node_color,
+                node_size=node_size,
+                font_color=font_color,
+                font_size=font_size,
+                width=width_,
+                arrowsize=arrowsize_,
+                edgecolors=edge_node_color
+                )

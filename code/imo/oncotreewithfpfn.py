@@ -94,7 +94,18 @@ class OncoTreeWithFpFn(object):
         self.create_init_graph(df)
         self.find_branching()
 
-    def draw(self, figsize=(20, 15), with_edges=True):  # TODO move this function to utils
+    def draw(self,
+             figsize=(20, 15),
+             with_edges=True,
+             node_color= 'white',
+             node_size= 10000,
+             font_color='black',
+             font_size = 20,
+             width_ = 3,
+             arrowsize_ = 30,
+             edge_label_size = 20,
+             edge_node_color = 'black'
+             ):  # TODO move this function to utils
         """
         Plot the graph
 
@@ -112,11 +123,22 @@ class OncoTreeWithFpFn(object):
             self.optimum_branching[u][v]['weight'] = 1
 
         pos = nx.drawing.nx_pydot.pydot_layout(self.optimum_branching, prog='dot')
-        nx.draw(self.optimum_branching, pos, with_labels=True)
+        nx.draw(self.optimum_branching,
+                pos,
+                with_labels=True,
+                node_color=node_color,
+                node_size=node_size,
+                font_color=font_color,
+                font_size=font_size,
+                width=width_,
+                arrowsize=arrowsize_,
+                edgecolors=edge_node_color)
 
         if with_edges:
-            nx.draw_networkx_edge_labels(self.optimum_branching, pos, edge_labels=edge_weights)
-
+            nx.draw_networkx_edge_labels(self.optimum_branching,
+                                         pos,
+                                         edge_labels=edge_weights,
+                                         font_size=edge_label_size)
         # reset the edge weights to their original weights
         for u, v in edge_weights:
             self.optimum_branching[u][v]['weight'] = edge_weights[(u, v)]

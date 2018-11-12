@@ -5,7 +5,6 @@ from rpy2.robjects import pandas2ri
 import numpy as np
 
 T = importr('TRONCO')
-
 class CAPRESE(object):
     def __init__(self):
         self.data = None

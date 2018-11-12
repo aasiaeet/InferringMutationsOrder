@@ -5,7 +5,6 @@ from rpy2.robjects import pandas2ri
 import numpy as np
 
 T = importr('TRONCO')
-
 class CAPRI(object):
     def __init__(self, nboot=5, boot_seed=12345):
         self.data = None
