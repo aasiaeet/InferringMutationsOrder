@@ -30,6 +30,7 @@ class OncoTreeWithFpFn(object):
     def create_init_graph(self, df):
         # for each gene, find the set of patients whom this gene has mutated in them and its size of this set
         cases = pd.DataFrame(df.groupby('Hugo_Symbol')['case_id'].apply(set))
+        cases = cases.append(pd.DataFrame(set(df.case_id.unique()), columns=['case_id'], index=['zero']))
         cases['count'] = cases['case_id'].apply(len)
 
         # drop low mutated genes if desired
