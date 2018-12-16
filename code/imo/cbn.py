@@ -1,4 +1,5 @@
 import networkx as nx
+import numpy as np
 from matplotlib import pyplot as plt
 
 
@@ -15,10 +16,6 @@ class CBN(object):
     def __df_to_prob_dist(cls, df):
         return df.groupby('case_id')['Hugo_Symbol'].apply(set)
 
-    @classmethod
-    def __get_all_genes(cls, u):
-        return u.index
-
     def _reduce_events(self, u):
         pass
 
@@ -26,23 +23,30 @@ class CBN(object):
         self.G = nx.DiGraph()
         for f in self.events:
             for e in self.events:
-                if u.apply(lambda g: g & {e, f} == {f}).sum() <= self.epsilon:
+                n_errors = u.apply(lambda g: g & {e, f} == {f}).sum()
+                if n_errors <= self.epsilon:
                     self.G.add_edge(e, f)
         return self.G
 
     def _find_probabilities(self, u):
         theta = {}
-        for e in self.G.nodes:
+        nodes = np.copy(self.G.nodes)
+        for e in nodes:
             below = u.apply(lambda g: set(self.G.predecessors(e)).issubset(g)).sum()
-            theta[e] = round(u.apply(lambda g: e in g).sum() / below, 2)
+            if below == 0:
+                self.G.remove_node(e)
+            else:
+                theta[e] = round(u.apply(lambda g: e in g).sum() / below, 3)
         nx.set_node_attributes(self.G, theta, 'theta')
         return theta
 
     def fit(self, X):
+        all_genes = X['Hugo_Symbol'].unique()
         u = CBN.__df_to_prob_dist(X)
 
         if self.events is None:
-            self.events = CBN.__get_all_genes(u)
+            self.events = all_genes
+        self.events = [e for e in self.events if e in all_genes]
         if 0 < self.epsilon < 1:
             self.epsilon = int(u.shape[0] * self.epsilon)
 
@@ -76,5 +80,4 @@ class CBN(object):
                 font_size=font_size,
                 width=width_,
                 arrowsize=arrowsize_,
-                edgecolors=edge_node_color
-                )
+                edgecolors=edge_node_color)
