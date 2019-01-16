@@ -3,6 +3,16 @@ import pandas as pd
 from rpy2.robjects import r
 from rpy2.robjects import pandas2ri
 import numpy as np
+from rpy2.interactive import process_revents
+from rpy2.robjects.packages import importr
+process_revents.start()
+import rpy2
+import IPython
+from rpy2.robjects.lib import grdevices
+import IPython
+
+
+graphics = importr("graphics")
 
 T = importr('TRONCO')
 class CAPRI(object):
@@ -30,14 +40,18 @@ class CAPRI(object):
 
     def draw(self,file_name = r('NA')):
 
-        T.tronco_plot(self.model,
-                      fontsize=12,
-                      scale_nodes=0.6,
-                      confidence=r("c('tp', 'pr', 'hg')"),
-                      height_logic=0.25,
-                      legend_cex=0.35,
-                      pathways=list(self.driver_gens),
-                      label_edge_size=10,
-                      file = file_name)
+        with rpy2.robjects.lib.grdevices.render_to_bytesio(grdevices.png, width=1024, height=896, res=150) as img:
+            T.tronco_plot(self.model,
+                          fontsize=12,
+                          scale_nodes=0.6,
+                          confidence=r("c('tp', 'pr', 'hg')"),
+                          height_logic=0.25,
+                          legend_cex=0.35,
+                          pathways=list(self.driver_gens),
+                          label_edge_size=10,
+                          file=file_name)
+
+        IPython.display.display(IPython.display.Image(data=img.getvalue(), format='png', embed=True))
+
 
 

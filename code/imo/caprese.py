@@ -3,6 +3,15 @@ import pandas as pd
 from rpy2.robjects import r
 from rpy2.robjects import pandas2ri
 import numpy as np
+from rpy2.interactive import process_revents
+from rpy2.robjects.packages import importr
+process_revents.start()
+import rpy2
+import IPython
+from rpy2.robjects.lib import grdevices
+import IPython
+
+graphics = importr("graphics")
 
 T = importr('TRONCO')
 class CAPRESE(object):
@@ -26,11 +35,13 @@ class CAPRESE(object):
 
     def draw(self, file_name=r('NA')):
 
-        T.tronco_plot(self.model,
-                      fontsize=12,
-                      scale_nodes=0.6,
-                      legend = False,
-                      file=file_name)
+        with rpy2.robjects.lib.grdevices.render_to_bytesio(grdevices.png, width=1024, height=896, res=150) as img:
+            T.tronco_plot(self.model,
+                          fontsize=12,
+                          scale_nodes=0.6,
+                          legend = False,
+                          file=file_name)
+        IPython.display.display(IPython.display.Image(data=img.getvalue(), format='png', embed=True))
 
 
 
