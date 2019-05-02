@@ -1,0 +1,40 @@
+
+\subsection{DAG Models}
+	\subsubsection{CAPRI: efficient inference of cancer progression
+models from cross-sectional data \cite{Ramazzotti2015}}
+	{\bf Model:}
+	The CAncerPRogression Inference (CAPRI) \cite{Ramazzotti2015} is one of the recent papers on cancer progression that may be deemed as the current state-of-the-art algorithm for the inference models of Directed Acyclic Graphs (DAGs) cancer progression. This method based on Darwinian interpretation of cancer progression, combined with a probabilistic framework. 
+	
+
+	
+	{\bf Algorithm:}
+    CAPRI algorithm used a scoring method based on a probabilistic theory developed by Suppes, coupled with bootstrapping and maximum likelihood inference. It reconstructs a probabilistic graphical models by inferring selectivity relation. The relations are estimated by exploiting causality condition estimation benefit from bootstrapping mediation and based on Suppes causality Which has two principles for estimating a relation:
+	 \begin{itemize}
+	     \item \textit{temporal priority (TP)}: Event i occurs earlier than event j. It estimated by probability of event i and j ($\pr (i) > \pr (j)$).
+	     \item \textit{probability raising (PR)}: Probability of event i raises when we observed event j that means $\pr (i | j) > \pr (i | \Bar{i}) $.
+	 \end{itemize}
+    then compute P-value of every edge orientations and remove the edges which placed in a loop and had less confidence.
+    As this method, only check a conditional probability it may find some false positive relations, so, fits a maximum-likelihood with regularization(e.g. BIC, AIC, etc) to select and prune the DAG. 
+	\begin{algorithm}[t]
+		\caption{CAPRI: CAncerPRogression Inference}
+		\label{alg5}
+		\begin{algorithmic}[1]
+			\STATE {\bfseries input:} Input binary data matrix $\X \in \reals^{n \times p}$.
+			\STATE {\bfseries output:} DAGs ${\calD = \T(\cV, \cE, \alpha)$.
+			    \FOR{$i$ in $\cV$}
+    			    \FOR{$j = 0$ in $\cV$}
+    			    \IF{ $\pr (i) > \pr (j)$ $\And$ $\pr (i | j) > \pr (i | \Bar{i}) $}
+    			        \STATE{Add arc $\T(i,j)$ to edge list. $\cE \leftarrow \cE \cup \T(i,j)$}
+    			    \ENDIF
+    			    \ENDFOR
+			    \ENDFOR
+
+			    \STATE{$\forall i \in \cV$ Define $\alpha(i)$ as follow:}
+			    \\$\alpha(i)$ = $\Bigg\{$ 
+			        \begin{tabular}{ccc}
+			        $\pr(i)  \quad if \pi(i)= \emptyset$\\
+                  $\pr(i|j_1,j_2,...,J_n)  \quad if \pi(i) = \{j_1,j_2,...,j_n\}$
+                   \end{tabular}
+			    \STATE{Fillter out all false positive relation by likelihood fit with regularization BIC or AIC score and set $\alpha(j) = 0$ for each removed edge.}
+		\end{algorithmic} 
+	\end{algorithm}
