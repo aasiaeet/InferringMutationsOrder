@@ -25,12 +25,12 @@ class CAPRESE(object):
     def fit(self, X, driver_gens = None):
         r_dataframe = pandas2ri.py2ri(X)
         self.data = T.import_MAF(r_dataframe)
-        if driver_gens is not None:
+        if driver_gens != None:
             self.driver_gens = r('c(' + str(driver_gens)[1:-1] + ')' )
             self.data_clean = T.events_selection(self.data, filter_in_names=self.driver_gens)
         else:
             self.data_claen = self.data
-
+        self.data_clean = T.change_color(self.data_clean, 'Mutation', '#ffffff')
         self.model = T.tronco_caprese(self.data_clean)
 
     def draw(self, file_name=r('NA')):

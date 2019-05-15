@@ -29,12 +29,12 @@ class CAPRI(object):
     def fit(self, X, driver_gens = None):
         r_dataframe = pandas2ri.py2ri(X)
         self.data = T.import_MAF(r_dataframe)
-        if driver_gens is not None:
+        if driver_gens != None:
             self.driver_gens = r('c(' + str(driver_gens)[1:-1] + ')' )
             self.data_clean = T.events_selection(self.data, filter_in_names=self.driver_gens)
         else:
             self.data_claen = self.data
-
+        self.data_clean = T.change_color(self.data_clean, 'Mutation', '#ffffff')
         self.model = T.tronco_capri(self.data_clean, boot_seed=self.boot_seed, nboot=self.nboot)
 
 
@@ -44,11 +44,7 @@ class CAPRI(object):
             T.tronco_plot(self.model,
                           fontsize=12,
                           scale_nodes=0.6,
-                          confidence=r("c('tp', 'pr', 'hg')"),
-                          height_logic=0.25,
-                          legend_cex=0.35,
-                          pathways=list(self.driver_gens),
-                          label_edge_size=10,
+                          legend=False,
                           file=file_name)
 
         IPython.display.display(IPython.display.Image(data=img.getvalue(), format='png', embed=True))

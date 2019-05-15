@@ -2,3 +2,4 @@ code/.idea
 code/venv
 code/imo/__pycache_
 code/imo/.idea
+*.pyc

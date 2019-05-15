@@ -52,6 +52,7 @@ class Treemix(object):
 
 
 
+
     def draw(self):
         with rpy2.robjects.lib.grdevices.render_to_bytesio(grdevices.png, width=1024, height=896, res=150) as img:
             Rplot(self.model, fontSize=14)
