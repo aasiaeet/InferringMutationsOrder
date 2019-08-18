@@ -11,7 +11,13 @@ library('partitions')
 ```
 
 ```{r}
-network <- read.net('sample1.net')
+RATE <- 5
+TIMELIMIT <- 1
+```
+
+
+```{r}
+network <- read.net('sample2.net')
 ```
 
 ```{r}
@@ -46,7 +52,7 @@ add_arg = function(network, first.node, sec.node) {
 ```
 
 ```{r}
-network <- add_arg(network = network , first.node = 'C', sec.node = 'E')
+network <- add_arg(network = network , first.node = 'D', sec.node = 'E')
 ```
 
 ```{r}
@@ -77,8 +83,9 @@ randomPartition <- function(n) {
 
 ```{r}
 synthesizeColon <- function(network) {
-    q = list()
-    colons = c()
+    q <- list()
+    colons <- c()
+    times <- list()
     roots <- root.nodes(network)
     for (i in 1:length(roots)) {
         ev <<- parse(text=sprintf("%s == 'yes'", roots[i]))
@@ -86,6 +93,7 @@ synthesizeColon <- function(network) {
         if (rbinom(1, 1, p) == 1) {
             q <- c(q, roots[i])
             colons <- c(colons, roots[i])
+            times[[roots[i]]] <- rexp(1, RATE)
             print(sprintf("%s added", roots[i]))
         }
     }
@@ -98,10 +106,16 @@ synthesizeColon <- function(network) {
         colon <- as.vector(unlist(strsplit(colonStr, split=' ')))
         u <- colon[length(colon)]
         # print(u)
+        colonTime <- times[[colonStr]]
         
-        allChildren <- children(network, u)
+        allChildren <- c()
+        for(u in 1:length(colon)){
+            allChildren <- c(allChildren, children(network, colon[u]))
+        }
+        allChildren <- unique(allChildren)
         allChildren <- allChildren[!(allChildren %in% colon)]
         parents <- colon[!(colon %in% allChildren)]
+        
         uChildren <- c()
         # print(evidenceToString(parents, NULL))
         evi <<- parse(text=evidenceToString(parents, NULL))
@@ -130,9 +144,16 @@ synthesizeColon <- function(network) {
                 childrenSet <- paste(colonStr, childrenSet)
                 # print('pushed')
                 # print(childrenSet)
-                colons <- c(colons, childrenSet)
-                q <- c(q, childrenSet)
-                index <- index + part[i]
+                childrenTime <- colonTime + rexp(1, RATE)
+                if (childrenTime < TIMELIMIT) {
+                    colons <- c(colons, childrenSet)
+                    q <- c(q, childrenSet)
+                    times[[childrenSet]] <- childrenTime
+                    index <- index + part[i]
+                    print(sprintf("For colon %s, time = %f", childrenSet, childrenTime))
+                } else {
+                    print(sprintf("Time limit reached for colon %s, time = %f", childrenSet, childrenTime))
+                }
             }
         }
     }
