@@ -6,7 +6,7 @@ output: html_notebook
 ```{r}
 library("bnlearn")
 library("Rgraphviz")
-library("datastructures")
+
 library('partitions')
 ```
 
@@ -164,6 +164,7 @@ synthesizeColon <- function(network) {
 ```{r}
 synthesizeColon(network)
 ```
+
 
 
 ```{r}
